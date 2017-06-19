@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<mavlink>
+  <!-- mavlink ID range: 3 8 9 10 12~19 52~53 56~60 68 71~72 78~80 88 94~99 145 159 187~190 196~199 202~213 220~225 227~229 235~240 255 -->
+  <messages>
+    <message id="3" name="ELASTICITY">
+      <description>Return the received message as it is</description>
+      <field name="data" type="uint32_t[8]">Data received</field>
+    </message>
+    <message id="8" name="STREAM_SPEED">
+      <description>Set stream speed</description>
+      <field name="speed_1" type="uint32_t">8 streams</field>
+      <field name="speed_2" type="uint32_t">8 streams</field>
+      <field name="bitmask" type="uint8_t">bit0-SR0, bit1-SR1, bit2-SR2...</field>
+    </message>
+    <message id="9" name="ANGLE_TRACE">
+      <description>Set stream speed</description>
+      <field name="target" type="float">target angle in rad</field>
+      <field name="sensor" type="float">sensor in rad</field>
+    </message>
+  </messages>
+</mavlink>
