@@ -149,8 +149,8 @@
       <entry value="27" name="MAV_TYPE_ADSB">
         <description>Onboard ADSB peripheral</description>
       </entry>
-      <entry value="28" name="MAV_TYPE_DODECAROTOR">
-        <description>Dodecarotor</description>
+      <entry value="28" name="MAV_TYPE_PARAFOIL">
+        <description>Steerable, nonrigid airfoil</description>
       </entry>
     </enum>
     <enum name="FIRMWARE_VERSION_TYPE">
@@ -303,6 +303,9 @@
       <entry name="MAV_STATE_POWEROFF">
         <description>System just initialized its power-down sequence, will shut down now.</description>
       </entry>
+      <entry name="MAV_STATE_FLIGHT_TERMINATION">
+        <description>System is terminating itself.</description>
+      </entry>
     </enum>
     <enum name="MAV_COMPONENT">
       <entry value="0" name="MAV_COMP_ID_ALL">
@@ -311,7 +314,28 @@
       <entry value="1" name="MAV_COMP_ID_AUTOPILOT1">
         <description/>
       </entry>
+      <entry value="100" name="MAV_COMP_ID_CAMERA">
+        <description/>
+      </entry>
+      <entry value="101" name="MAV_COMP_ID_CAMERA2">
+        <description/>
+      </entry>
+      <entry value="102" name="MAV_COMP_ID_CAMERA3">
+        <description/>
+      </entry>
+      <entry value="103" name="MAV_COMP_ID_CAMERA4">
+        <description/>
+      </entry>
+      <entry value="104" name="MAV_COMP_ID_CAMERA5">
+        <description/>
+      </entry>
+      <entry value="105" name="MAV_COMP_ID_CAMERA6">
+        <description/>
+      </entry>
       <entry value="220" name="MAV_COMP_ID_GPS">
+        <description/>
+      </entry>
+      <entry value="221" name="MAV_COMP_ID_GPS2">
         <description/>
       </entry>
       <entry value="190" name="MAV_COMP_ID_MISSIONPLANNER">
@@ -321,9 +345,6 @@
         <description/>
       </entry>
       <entry value="180" name="MAV_COMP_ID_MAPPER">
-        <description/>
-      </entry>
-      <entry value="100" name="MAV_COMP_ID_CAMERA">
         <description/>
       </entry>
       <entry value="200" name="MAV_COMP_ID_IMU">
@@ -595,6 +616,40 @@
         <description>Load neutral position and start to point to Lat,Lon,Alt</description>
       </entry>
     </enum>
+    <!-- UAVCAN -->
+    <enum name="UAVCAN_NODE_HEALTH">
+      <description>Generalized UAVCAN node health</description>
+      <entry value="0" name="UAVCAN_NODE_HEALTH_OK">
+        <description>The node is functioning properly.</description>
+      </entry>
+      <entry value="1" name="UAVCAN_NODE_HEALTH_WARNING">
+        <description>A critical parameter went out of range or the node has encountered a minor failure.</description>
+      </entry>
+      <entry value="2" name="UAVCAN_NODE_HEALTH_ERROR">
+        <description>The node has encountered a major failure.</description>
+      </entry>
+      <entry value="3" name="UAVCAN_NODE_HEALTH_CRITICAL">
+        <description>The node has suffered a fatal malfunction.</description>
+      </entry>
+    </enum>     
+    <enum name="UAVCAN_NODE_MODE">
+      <description>Generalized UAVCAN node mode</description>
+      <entry value="0" name="UAVCAN_NODE_MODE_OPERATIONAL">
+        <description>The node is performing its primary functions.</description>
+      </entry>
+      <entry value="1" name="UAVCAN_NODE_MODE_INITIALIZATION">
+        <description>The node is initializing; this mode is entered immediately after startup.</description>
+      </entry>
+      <entry value="2" name="UAVCAN_NODE_MODE_MAINTENANCE">
+        <description>The node is under maintenance.</description>
+      </entry>
+      <entry value="3" name="UAVCAN_NODE_MODE_SOFTWARE_UPDATE">
+        <description>The node is in the process of updating its software.</description>
+      </entry>
+      <entry value="7" name="UAVCAN_NODE_MODE_OFFLINE">
+        <description>The node is no longer available online.</description>
+      </entry>
+    </enum>   
     <enum name="MAV_CMD">
       <description>Commands to be executed by the MAV. They can be executed on user request, or as part of a mission script. If the action is used in a mission, the parameter mapping to the waypoint/mission message is as follows: Param 1, Param 2, Param 3, Param 4, X: Param 5, Y:Param 6, Z:Param 7. This command list is similar what ARINC 424 is for commercial aircraft: A data format how to interpret waypoint/mission data.</description>
       <entry value="16" name="MAV_CMD_NAV_WAYPOINT">
@@ -1836,6 +1891,42 @@
       <entry value="10" name="MAV_PARAM_TYPE_REAL64">
         <description>64-bit floating-point</description>
       </entry>
+    </enum>  
+    <enum name="MAV_PARAM_EXT_TYPE">
+      <description>Specifies the datatype of a MAVLink parameter.</description>
+      <entry value="1" name="MAV_PARAM_EXT_TYPE_UINT8">
+        <description>8-bit unsigned integer</description>
+      </entry>
+      <entry value="2" name="MAV_PARAM_EXT_TYPE_INT8">
+        <description>8-bit signed integer</description>
+      </entry>
+      <entry value="3" name="MAV_PARAM_EXT_TYPE_UINT16">
+        <description>16-bit unsigned integer</description>
+      </entry>
+      <entry value="4" name="MAV_PARAM_EXT_TYPE_INT16">
+        <description>16-bit signed integer</description>
+      </entry>
+      <entry value="5" name="MAV_PARAM_EXT_TYPE_UINT32">
+        <description>32-bit unsigned integer</description>
+      </entry>
+      <entry value="6" name="MAV_PARAM_EXT_TYPE_INT32">
+        <description>32-bit signed integer</description>
+      </entry>
+      <entry value="7" name="MAV_PARAM_EXT_TYPE_UINT64">
+        <description>64-bit unsigned integer</description>
+      </entry>
+      <entry value="8" name="MAV_PARAM_EXT_TYPE_INT64">
+        <description>64-bit signed integer</description>
+      </entry>
+      <entry value="9" name="MAV_PARAM_EXT_TYPE_REAL32">
+        <description>32-bit floating-point</description>
+      </entry>
+      <entry value="10" name="MAV_PARAM_EXT_TYPE_REAL64">
+        <description>64-bit floating-point</description>
+      </entry>
+      <entry value="11" name="MAV_PARAM_EXT_TYPE_CUSTOM">
+        <description>Custom Type</description>
+      </entry>
     </enum>
     <enum name="MAV_RESULT">
       <description>result from a mavlink command</description>
@@ -1853,6 +1944,9 @@
       </entry>
       <entry value="4" name="MAV_RESULT_FAILED">
         <description>Command executed, but failed</description>
+      </entry>
+      <entry value="5" name="MAV_RESULT_IN_PROGRESS">
+        <description>WIP: Command being executed</description>
       </entry>
     </enum>
     <enum name="MAV_MISSION_RESULT">
@@ -2175,6 +2269,9 @@
       <entry value="32768" name="MAV_PROTOCOL_CAPABILITY_MISSION_RALLY">
         <description>Autopilot supports mission rally point protocol.</description>
       </entry>
+      <entry value="65536" name="MAV_PROTOCOL_CAPABILITY_FLIGHT_INFORMATION">
+        <description>Autopilot supports mission rally point protocol.</description>
+      </entry>
     </enum>
     <enum name="MAV_MISSION_TYPE">
       <description>Type of mission items being requested/sent in mission protocol.</description>
@@ -2490,6 +2587,24 @@
       </entry>
       <entry value="7" name="GPS_FIX_TYPE_STATIC">
         <description>Static fixed, typically used for base stations</description>
+      </entry>
+      <entry value="8" name="GPS_FIX_TYPE_PPP">
+        <description>PPP, 3D position.</description>
+      </entry>
+    </enum>
+    <enum name="LANDING_TARGET_TYPE">
+      <description>Type of landing target</description>
+      <entry value="0" name="LANDING_TARGET_TYPE_LIGHT_BEACON">
+        <description>Landing target signaled by light beacon (ex: IR-LOCK)</description>
+      </entry>
+      <entry value="1" name="LANDING_TARGET_TYPE_RADIO_BEACON">
+        <description>Landing target signaled by radio beacon (ex: ILS, NDB)</description>
+      </entry>
+      <entry value="2" name="LANDING_TARGET_TYPE_VISION_FIDUCIAL">
+        <description>Landing target represented by a fiducial marker (ex: ARTag)</description>
+      </entry>
+      <entry value="3" name="LANDING_TARGET_TYPE_VISION_OTHER">
+        <description>Landing target represented by a pre-defined visual shape/feature (ex: X-marker, H-marker, square)</description>
       </entry>
     </enum>
     <enum name="RTK_BASELINE_COORDINATE_SYSTEM">
@@ -3740,7 +3855,8 @@
       <field type="uint8_t[8]" name="os_custom_version">Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but should allow to identify the commit using the main version number even for very large code bases.</field>
       <field type="uint16_t" name="vendor_id">ID of the board vendor</field>
       <field type="uint16_t" name="product_id">ID of the product</field>
-      <field type="uint64_t" name="uid">UID if provided by hardware</field>
+      <field type="uint64_t" name="uid">UID if provided by hardware (see uid2)</field>
+      <field type="uint8_t[18]" name="uid2">UID if provided by hardware (supersedes the uid field. If this is non-zero, use this field, otherwise use uid)</field>
     </message>
     <message id="149" name="LANDING_TARGET">
       <description>The location of a landing area captured from a downward facing camera</description>
@@ -3973,15 +4089,19 @@
     <message id="259" name="CAMERA_INFORMATION">
       <description>WIP: Information about a camera</description>
       <field type="uint32_t" name="time_boot_ms" units="ms">Timestamp (milliseconds since system boot)</field>
+      <field type="uint32_t" name="firmware_version">Version of the camera firmware</field>
       <field type="uint8_t" name="camera_id">Camera ID if there are multiple</field>
       <field type="uint8_t[32]" name="vendor_name">Name of the camera vendor</field>
       <field type="uint8_t[32]" name="model_name">Name of the camera model</field>
       <field type="float" name="focal_length" units="mm">Focal length in mm</field>
       <field type="float" name="sensor_size_h" units="mm">Image sensor size horizontal in mm</field>
       <field type="float" name="sensor_size_v" units="mm">Image sensor size vertical in mm</field>
+      <field type="uint32_t" name="flags">CAMERA_CAP_FLAGS enum flags (bitmap) describing camera capabilities.</field>
       <field type="uint16_t" name="resolution_h" units="pix">Image resolution in pixels horizontal</field>
       <field type="uint16_t" name="resolution_v" units="pix">Image resolution in pixels vertical</field>
-      <field type="uint8_t" name="lense_id">Reserved for a lense ID</field>
+      <field type="uint16_t" name="cam_definition_version">Camera definition version (iteration)</field>
+      <field type="uint8_t" name="lens_id">Reserved for a lens ID</field>
+      <field type="char[140]" name="cam_definition_uri">Camera definition URI (if any, otherwise only basic functions will be available).</field>
     </message>
     <message id="260" name="CAMERA_SETTINGS">
       <description>WIP: Settings of a camera, can be requested using MAV_CMD_REQUEST_CAMERA_SETTINGS and written using MAV_CMD_SET_CAMERA_SETTINGS</description>
@@ -4003,6 +4123,7 @@
       <description>WIP: Information about a storage medium</description>
       <field type="uint32_t" name="time_boot_ms" units="ms">Timestamp (milliseconds since system boot)</field>
       <field type="uint8_t" name="storage_id">Storage ID if there are multiple</field>
+      <field type="uint8_t" name="storage_count">Number of storage devices</field>
       <field type="uint8_t" name="status">Status of storage (0 not available, 1 unformatted, 2 formatted)</field>
       <field type="float" name="total_capacity" units="Mibytes">Total capacity in MiB</field>
       <field type="float" name="used_capacity" units="Mibytes">Used capacity in MiB</field>
@@ -4077,6 +4198,34 @@
       <field type="uint8_t" name="target_component">component ID of the target</field>
       <field type="uint16_t" name="sequence">sequence number (must match the one in LOGGING_DATA_ACKED)</field>
     </message>
+    <message id="269" name="VIDEO_STREAM_INFORMATION">
+      <description>set video stream infomation</description>
+      <field type="float" name="framerate">Frames per second</field>
+      <field type="uint32_t" name="bitrate">Bit rate in bits per second</field>
+      <field type="uint16_t" name="resolution_h">Resolution horizontal in pixels</field>
+      <field type="uint16_t" name="resolution_v">Resolution vertical in pixels</field>
+      <field type="uint16_t" name="rotation">Video image rotation clockwise</field>
+      <field type="uint8_t" name="camera_id">Camera ID (1 for first, 2 for second, etc.)</field>
+      <field type="uint8_t" name="status">Current status of video streaming (0: not running, 1: in progress)</field>
+      <field type="char[230]" name="uri">Video stream URI</field>
+    </message>
+    <message id="270" name="SET_VIDEO_STREAM_SETTINGS">
+      <description>set video stream settings</description>
+      <field type="float" name="framerate">Frames per second (set to -1 for highest framerate possible)</field>
+      <field type="uint32_t" name="bitrate">Bit rate in bits per second (set to -1 for auto)</field>
+      <field type="uint16_t" name="resolution_h">Resolution horizontal in pixels (set to -1 for highest resolution possible)</field>
+      <field type="uint16_t" name="resolution_v">Resolution vertical in pixels (set to -1 for highest resolution possible)</field>
+      <field type="uint16_t" name="rotation">Video image rotation clockwise (0-359 degrees)</field>
+      <field type="uint8_t" name="target_system">system ID of the target</field>
+      <field type="uint8_t" name="target_component">component ID of the target</field>
+      <field type="uint8_t" name="camera_id">Camera ID (1 for first, 2 for second, etc.)</field>
+      <field type="char[230]" name="uri">Video stream URI</field>
+    </message>
+    <message id="299" name="WIFI_CONFIG_AP">
+      <description>wifi config ap</description>
+      <field type="char[32]" name="ssid">Name of Wi-Fi network (SSID). Leave it blank to leave it unchanged.</field>
+      <field type="char[64]" name="password">Password. Leave it blank for an open AP.</field>
+    </message> 
     <message id="300" name="PROTOCOL_VERSION">
       <description>An ack for a LOGGING_DATA_ACKED message</description>
       <field type="uint16_t" name="version">Currently active MAVLink version number * 100: v1.0 is 100, v2.0 is 200, etc.</field>
@@ -4084,6 +4233,71 @@
       <field type="uint16_t" name="max_version">Maximum MAVLink version supported (set to the same value as version by default)</field>
       <field type="uint8_t[8]" name="spec_version_hash">The first 8 bytes (not characters printed in hex!) of the git hash.</field>
       <field type="uint8_t[8]" name="library_version_hash">The first 8 bytes (not characters printed in hex!) of the git hash.</field>
+    </message>   
+    <message id="310" name="UAVCAN_NODE_STATUS">
+      <description>uavcan node status</description>
+      <field type="uint64_t" name="time_usec">Timestamp (microseconds since UNIX epoch or microseconds since system boot)</field>
+      <field type="uint32_t" name="uptime_sec">The number of seconds since the start-up of the node.</field>
+      <field type="uint16_t" name="vendor_specific_status_code">Vendor-specific status information.</field>
+      <field type="uint8_t" name="health">Generalized node health status.</field>
+      <field type="uint8_t" name="mode">Generalized operating mode.</field>
+      <field type="uint8_t" name="sub_mode">Not used currently.</field>
+    </message>
+    <message id="311" name="UAVCAN_NODE_INFO">
+      <description>uavcan node info</description>
+      <field type="uint64_t" name="time_usec">Timestamp (microseconds since UNIX epoch or microseconds since system boot)</field>
+      <field type="uint32_t" name="uptime_sec">The number of seconds since the start-up of the node.</field>
+      <field type="uint32_t" name="sw_vcs_commit">Version control system (VCS) revision identifier (e.g. git short commit hash). Zero if unknown.</field>
+      <field type="char[80]" name="name">Node name string. For example, "sapog.px4.io".</field>
+      <field type="uint8_t" name="hw_version_major">Hardware major version number.</field>
+      <field type="uint8_t" name="hw_version_minor">Hardware minor version number.</field>
+      <field type="uint8_t[16]" name="hw_unique_id">Hardware unique 128-bit ID.</field>
+      <field type="uint8_t" name="sw_version_major">Software major version number.</field>
+      <field type="uint8_t" name="sw_version_minor">Software minor version number.</field>
+    </message>
+    <message id="320" name="PARAM_EXT_REQUEST_READ">
+      <description>ext request read</description>
+      <field type="uint16_t" name="param_index">Parameter index. Set to -1 to use the Parameter ID field as identifier (else param_id will be ignored)</field>
+      <field type="uint8_t" name="target_system">System ID</field>
+      <field type="uint8_t" name="target_component">Component ID</field>
+      <field type="char[16]" name="param_id">Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the ID is stored as string</field>
+    </message>
+    <message id="321" name="PARAM_EXT_REQUEST_LIST">
+      <description>ext request list</description>
+      <field type="uint8_t" name="target_system">System ID</field>
+      <field type="uint8_t" name="target_component">Component ID</field>
+    </message>
+    <message id="322" name="PARAM_EXT_VALUE">
+      <description>param ext ack</description>
+      <field type="uint16_t" name="param_count">Total number of parameters</field>
+      <field type="uint16_t" name="param_index">Index of this parameter</field>
+      <field type="char[16]" name="param_id">Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the ID is stored as string</field>
+      <field type="char[128]" name="param_value">Parameter value (new value if PARAM_ACK_ACCEPTED, current value otherwise)</field>
+      <field type="uint8_t" name="param_type">Parameter type: see the MAV_PARAM_EXT_TYPE enum for supported data types.</field>
+    </message>
+    <message id="323" name="PARAM_EXT_SET">
+      <description>param ext ack</description>
+      <field type="uint8_t" name="target_system">Result code: see the PARAM_ACK enum for possible codes.</field>
+      <field type="uint8_t" name="target_component">Result code: see the PARAM_ACK enum for possible codes.</field>
+      <field type="char[16]" name="param_id">Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the ID is stored as string</field>
+      <field type="char[128]" name="param_value">Parameter value (new value if PARAM_ACK_ACCEPTED, current value otherwise)</field>
+      <field type="uint8_t" name="param_type">Parameter type: see the MAV_PARAM_EXT_TYPE enum for supported data types.</field>
+    </message>
+    <message id="324" name="PARAM_EXT_ACK">
+      <description>param ext ack</description>
+      <field type="char[16]" name="param_id">Parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the ID is stored as string</field>
+      <field type="char[128]" name="param_value">Parameter value (new value if PARAM_ACK_ACCEPTED, current value otherwise)</field>
+      <field type="uint8_t" name="param_type">Parameter type: see the MAV_PARAM_EXT_TYPE enum for supported data types.</field>
+      <field type="uint8_t" name="param_result">Result code: see the PARAM_ACK enum for possible codes.</field>
+    </message>
+    <message id="330" name="OBSTACLE_DISTANCE">
+      <description>obstacle distance</description>
+      <field type="uint64_t" name="time_usec">Timestamp (microseconds since system boot or since UNIX epoch)</field>
+      <field type="uint16_t[72]" name="distances">Distance of obstacles in front of the sensor starting on the left side. A value of 0 means that the obstacle is right in front of the sensor. A value of max_distance +1 means no obstace is present. A value of UINT16_MAX for unknown/not used. In a array element, each unit corresponds to 1cm.</field>
+      <field type="uint16_t" name="min_distance">Minimum distance the sensor can measure in centimeters</field>
+      <field type="uint16_t" name="max_distance">Maximum distance the sensor can measure in centimeters</field>
+      <field type="uint8_t" name="sensor_type">Class id of the distance sensor type.</field>
+      <field type="uint8_t" name="increment">Angular width in degrees of each array element.</field>
     </message>
   </messages>
 </mavlink>
