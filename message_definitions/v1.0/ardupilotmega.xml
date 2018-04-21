@@ -5,7 +5,6 @@
   <include>uAvionix.xml</include>
   <include>sharescience.xml</include>
   <include>icarous.xml</include>
-
   <dialect>2</dialect>
   <!-- note that APM specific messages should use the command id range from 150 to 250, to leave plenty of room for growth of common.xml If you prototype a message here, then you should consider if it is general enough to move into common.xml later -->
   <enums>
@@ -1300,6 +1299,8 @@
       <!-- per-image to support zooms. Zero means fixed focal length or unknown. Should be true mm, not scaled to 35mm film equivalent -->
       <field type="uint8_t" name="flags" enum="CAMERA_FEEDBACK_FLAGS">See CAMERA_FEEDBACK_FLAGS enum for definition of the bitmask</field>
       <!-- future proofing -->
+      <extensions/>
+      <field type="uint16_t" name="completed_captures">Completed image captures</field>
     </message>
     <message id="181" name="BATTERY2">
       <description>Deprecated. Use BATTERY_STATUS instead. 2nd Battery status</description>
